@@ -7,20 +7,15 @@ use Illuminate\Support\Facades\Config;
 
 class Rating extends Model
 {
-    public $fillable = ['rating','comment'];
+    protected $fillable = ['rating', 'rateable_type', 'rateable_id', 'rater_type', 'rater_id', 'comment'];
 
     public function rateable()
     {
         return $this->morphTo();
     }
 
-    public function user()
+    public function rater()
     {
-        $userClassName = Config::get('auth.model');
-        if (is_null($userClassName)) {
-            $userClassName = Config::get('auth.providers.users.model');
-        }
-
-        return $this->belongsTo($userClassName);
+        return $this->morphTo();
     }
 }
